@@ -1,0 +1,1910 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LSU SOM AI-Ready Physician Thread | UME Review Draft</title>
+  <style>
+    :root {
+      --bg: #f2f4f7;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #5f6876;
+      --line: #d9dee7;
+      --soft: #f8f9fb;
+      --navy: #18233f;
+      --navy-2: #243355;
+      --gold: #b8914b;
+      --gold-soft: #f5efe2;
+      --accent: #2f6875;
+      --accent-soft: #e7f0f2;
+      --risk: #8c3f59;
+      --risk-soft: #f6e9ee;
+      --success: #4f743e;
+      --warning: #8d5a2f;
+      --ai-literacy: #2f6875;
+      --reasoning: #8c3f59;
+      --appraisal: #625d96;
+      --ethics: #8d5a2f;
+      --workflow: #4f743e;
+      --governance: #50687e;
+      --shadow: 0 14px 34px rgba(18, 28, 45, 0.10);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { overflow-x: hidden; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Aptos, "Segoe UI", Arial, sans-serif;
+      line-height: 1.46;
+    }
+
+    a { color: var(--accent); }
+
+    button,
+    input,
+    select,
+    summary {
+      font-family: inherit;
+    }
+
+    header {
+      background: var(--navy);
+      color: #fff;
+      border-bottom: 5px solid var(--gold);
+      padding: 28px 34px 20px;
+    }
+
+    .header-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      color: #dbc790;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 7px 0 8px;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    h2,
+    h3,
+    h4 {
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    h2 { font-size: 22px; }
+    h3 { font-size: 16px; }
+    h4 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+
+    .subtitle {
+      max-width: 1140px;
+      margin: 0;
+      color: #dce2eb;
+      font-size: 16px;
+    }
+
+    .notice {
+      display: grid;
+      gap: 6px;
+      margin-top: 18px;
+      max-width: 1180px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-left: 5px solid var(--gold);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #f4efe1;
+    }
+
+    .notice b { color: #fff; }
+
+    .top-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .meta-pill {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      padding: 6px 10px;
+      color: #f6f0de;
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    main {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 22px 30px 44px;
+    }
+
+    .tab-shell {
+      display: grid;
+      gap: 18px;
+    }
+
+    .tab-bar {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      background: #e5e9ef;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .tab-btn {
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      min-height: 70px;
+      padding: 12px 14px;
+      text-align: left;
+      transition: border-color .15s ease, background .15s ease;
+    }
+
+    .tab-btn b {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 3px;
+    }
+
+    .tab-btn span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .tab-btn.active[data-tab="executive"] {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+
+    .tab-btn.active[data-tab="director"] {
+      background: var(--gold-soft);
+      border-color: var(--gold);
+      box-shadow: inset 0 0 0 1px var(--gold);
+    }
+
+    .tab-panel {
+      display: none;
+      gap: 18px;
+    }
+
+    .tab-panel.active { display: grid; }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .panel-pad { padding: 20px; }
+
+    .section-lead {
+      max-width: 1040px;
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .executive-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(330px, .9fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .summary-card {
+      border-top: 4px solid var(--gold);
+    }
+
+    .summary-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .summary-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: var(--soft);
+    }
+
+    .summary-item b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .summary-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .critique {
+      border-top: 4px solid var(--risk);
+    }
+
+    .do-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .do-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+    }
+
+    .do-card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .interactive-note {
+      margin: 0;
+      padding: 11px 13px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #244a53;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .spine-layout,
+    .domain-layout {
+      display: grid;
+      grid-template-columns: 380px minmax(0, 1fr);
+      gap: 16px;
+      margin-top: 14px;
+      align-items: start;
+    }
+
+    .button-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice-btn {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 11px 12px;
+      text-align: left;
+    }
+
+    .choice-btn b {
+      display: block;
+      font-size: 14px;
+    }
+
+    .choice-btn span {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .choice-btn.active {
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+      background: #f6fbfb;
+    }
+
+    .detail-box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--soft);
+      min-height: 170px;
+    }
+
+    .detail-box p { color: var(--muted); margin: 8px 0 0; }
+
+    .detail-box ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .year-progression {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .year-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+      border-top: 4px solid var(--navy-2);
+    }
+
+    .year-card b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .year-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pilot-spotlight {
+      border-top: 4px solid var(--accent);
+    }
+
+    .spotlight-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .callout {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      border-radius: 8px;
+      padding: 13px 14px;
+      background: #f7fbfc;
+    }
+
+    .callout p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .routine {
+      display: grid;
+      gap: 8px;
+      counter-reset: routine;
+      margin-top: 10px;
+    }
+
+    .routine div {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 9px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .routine div::before {
+      counter-increment: routine;
+      content: counter(routine);
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .timeline-shell {
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .side-tools {
+      position: sticky;
+      top: 12px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .tool-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .small-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 8px 9px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .month-row,
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(58px, 1fr));
+      gap: 6px;
+      min-width: 780px;
+    }
+
+    .timeline-scroll {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .month-row {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .timeline-year {
+      margin-top: 18px;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      min-width: 780px;
+    }
+
+    .year-title {
+      display: grid;
+      grid-template-columns: 115px 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .year-title b {
+      font-size: 17px;
+      color: var(--navy);
+    }
+
+    .year-title span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .track {
+      display: grid;
+      grid-template-columns: 115px 1fr;
+      gap: 10px;
+      margin: 7px 0;
+      align-items: stretch;
+    }
+
+    .track-label {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .timeline-course {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy-2);
+      border-radius: 7px;
+      background: #fff;
+      min-height: 74px;
+      padding: 8px;
+      text-align: left;
+      cursor: pointer;
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .timeline-course.active-hit {
+      background: #fffaf0;
+      border-left-color: currentColor;
+      box-shadow: inset 0 0 0 1px currentColor;
+    }
+
+    .timeline-course b {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 3px;
+    }
+
+    .timeline-course span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .mini-tags {
+      display: flex;
+      gap: 3px;
+      margin-top: 6px;
+    }
+
+    .mini-tag {
+      width: 12px;
+      height: 4px;
+      border-radius: 99px;
+      background: currentColor;
+    }
+
+    .matrix table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 13px;
+    }
+
+    .matrix th {
+      text-align: left;
+      color: #fff;
+      background: var(--navy);
+      padding: 10px;
+      border: 1px solid var(--navy-2);
+    }
+
+    .matrix td {
+      vertical-align: top;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .director-layout {
+      display: grid;
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .filters {
+      position: sticky;
+      top: 12px;
+      padding: 16px;
+      border-top: 4px solid var(--gold);
+    }
+
+    .filters label {
+      display: grid;
+      gap: 5px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .filters input,
+    .filters select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      font-size: 14px;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .filter-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .filter-actions button,
+    .print-btn {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fff;
+      color: var(--ink);
+      cursor: pointer;
+      padding: 9px 10px;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    .print-btn {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .course-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    details.course {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 7px 18px rgba(18, 28, 45, 0.06);
+      overflow: hidden;
+    }
+
+    details.course.pilot {
+      border-color: rgba(47, 104, 117, .65);
+      box-shadow: 0 8px 24px rgba(47, 104, 117, .12);
+    }
+
+    details.course > summary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      cursor: pointer;
+      padding: 14px 16px;
+      list-style: none;
+      background: #fff;
+    }
+
+    details.course > summary::-webkit-details-marker { display: none; }
+
+    .course-title b {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .course-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .badge,
+    .tag,
+    .concept,
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: #fff;
+    }
+
+    .badge {
+      border-color: rgba(47, 104, 117, .35);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .badge.recommended {
+      border-color: rgba(184, 145, 75, .45);
+      color: #775a23;
+      background: var(--gold-soft);
+    }
+
+    .badge.optional {
+      border-color: #cfd5df;
+      color: var(--muted);
+      background: #f4f6f8;
+    }
+
+    .course-body {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 16px 16px;
+      border-top: 1px solid var(--line);
+      background: #fbfcfd;
+    }
+
+    .box {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .box p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .chips,
+    .concept-chips,
+    .pill-list,
+    .map-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 9px;
+    }
+
+    .concept {
+      color: var(--navy);
+      background: #f7f8fa;
+    }
+
+    .map-list span {
+      display: block;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 7px 8px;
+      color: var(--muted);
+      background: #fff;
+      font-size: 12px;
+    }
+
+    .steps,
+    .checklist {
+      display: grid;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .steps div,
+    .checklist div {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 8px 9px;
+      color: var(--muted);
+      background: var(--soft);
+      font-size: 13px;
+    }
+
+    .three-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .three-grid .box {
+      background: var(--soft);
+    }
+
+    .privacy {
+      border-left: 5px solid var(--warning);
+      background: #fff9f2;
+    }
+
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    .source-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .source-list a {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 9px 10px;
+      background: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    footer {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 0 30px 26px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .executive-grid,
+      .director-layout,
+      .timeline-shell,
+      .spine-layout,
+      .domain-layout,
+      .spotlight-grid,
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+      .filters,
+      .side-tools {
+        position: static;
+      }
+      .year-progression,
+      .summary-list,
+      .do-grid,
+      .course-body,
+      .three-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      header { padding: 22px 18px 18px; }
+      main { padding: 16px 14px 30px; }
+      .tab-bar { grid-template-columns: 1fr; }
+      details.course > summary { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+      header {
+        background: #fff;
+        color: #000;
+        border-bottom: 2px solid #000;
+      }
+      .subtitle,
+      .notice,
+      .meta-pill,
+      .section-lead,
+      .box p,
+      .summary-item span,
+      .year-card span {
+        color: #000;
+      }
+      .tab-bar,
+      .filters,
+      .side-tools,
+      .small-actions,
+      .print-btn {
+        display: none !important;
+      }
+      main,
+      footer {
+        max-width: none;
+        padding: 0;
+      }
+      .tab-panel {
+        display: grid !important;
+      }
+      .panel,
+      details.course {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      details.course:not([open]) .course-body {
+        display: grid;
+      }
+      .timeline-scroll {
+        overflow: visible;
+      }
+      .month-row,
+      .timeline-year {
+        min-width: 0;
+      }
+      .course-grid,
+      .month-row {
+        grid-template-columns: repeat(12, 1fr);
+      }
+      a::after {
+        content: " (" attr(href) ")";
+        font-weight: 400;
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="eyebrow">LSU Health New Orleans School of Medicine</div>
+      <h1>AI-Ready Physician Curriculum Thread</h1>
+      <p class="subtitle">Internal UME working draft for integrating AI literacy, reasoning protection, critical appraisal, ethics, workflow, and governance into the undergraduate medical curriculum without displacing core medical instruction.</p>
+      <div class="notice">
+        <b>Phase 1 pilot planning map, not an approved curriculum change.</b>
+        <span>This file has two interactive tabs: an Executive Infographic view and a Course Director Map view. It is intended for dean, associate dean of UME, and course director review.</span>
+      </div>
+      <div class="top-note">
+        <span class="meta-pill">2025-26 Curriculum Schematic Overlay</span>
+        <span class="meta-pill">Emerging AAMC AI Competency Alignment</span>
+        <span class="meta-pill">Selected AAMC Core EPA Relevance</span>
+        <span class="meta-pill">MedAI Lexicon Concepts</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tab-shell">
+      <div class="tab-bar" role="tablist" aria-label="UME review views">
+        <button class="tab-btn active" type="button" data-tab="executive" role="tab" aria-selected="true">
+          <b>Executive Infographic</b>
+          <span>Dean-facing overview, schematic overlay, and reasoning-protection spine.</span>
+        </button>
+        <button class="tab-btn" type="button" data-tab="director" role="tab" aria-selected="false">
+          <b>Course Director Map</b>
+          <span>Searchable course-by-course implementation plan with checklists.</span>
+        </button>
+      </div>
+
+      <section id="executive" class="tab-panel active" role="tabpanel">
+        <section class="executive-grid">
+          <div class="panel panel-pad summary-card">
+            <h2>One-Page Executive Summary</h2>
+            <p class="section-lead">The proposed AI-ready physician thread is a longitudinal curriculum overlay. It uses existing medical school courses to teach students how to use AI while preserving the reasoning skills that physicians must retain.</p>
+            <div class="summary-list">
+              <div class="summary-item"><b>Why longitudinal</b><span>AI habits are not learned safely in one lecture. Students need repeated, supervised practice across basic science, population health, clinical skills, clerkships, and capstone experiences.</span></div>
+              <div class="summary-item"><b>Why not a stand-alone AI course</b><span>The key risks emerge inside actual medical tasks: probability, evidence appraisal, patient summaries, diagnostic reasoning, privacy, and clinical accountability.</span></div>
+              <div class="summary-item"><b>Phase 1 pilot</b><span>Start with POP, biostatistics, epidemiology, CSI, HELP, IPE, and clerkship preparation. Expand only after faculty review and local governance alignment.</span></div>
+              <div class="summary-item"><b>Assessment stance</b><span>Use short AI-output audits, prompt rewrites, privacy checks, and reasoning explanations. The evidence of learning is judgment, not tool fluency alone.</span></div>
+            </div>
+          </div>
+
+          <div class="panel panel-pad critique">
+            <h2>What This Proposal Does / Does Not Do</h2>
+            <p class="section-lead">This box is included to make UME critique easier and to prevent overclaiming.</p>
+            <div class="do-grid">
+              <div class="do-card">
+                <h3>Does</h3>
+                <ul>
+                  <li>Supports existing course objectives.</li>
+                  <li>Uses AI to protect and assess reasoning.</li>
+                  <li>Requires student-first reasoning before AI use.</li>
+                  <li>Includes privacy, equity, and governance boundaries.</li>
+                </ul>
+              </div>
+              <div class="do-card">
+                <h3>Does Not</h3>
+                <ul>
+                  <li>Does not turn courses into AI courses.</li>
+                  <li>Does not ask students to trust AI.</li>
+                  <li>Does not permit PHI in public AI tools.</li>
+                  <li>Does not represent an approved LSU SOM curriculum change.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad">
+          <p class="interactive-note">Interactive tab: select a risk or domain below to reveal its role in the curriculum thread.</p>
+          <div class="spine-layout">
+            <div>
+              <h2>Central Reasoning-Protection Spine</h2>
+              <p class="section-lead">The core educational problem is not whether AI can answer correctly. The problem is whether learners still build the reasoning required to know why an answer is correct.</p>
+              <div class="button-list" id="spineButtons"></div>
+            </div>
+            <div class="detail-box" id="spineDetail"></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad">
+          <div class="domain-layout">
+            <div>
+              <h2>Six Curriculum Domains</h2>
+              <p class="section-lead">AI literacy is necessary but insufficient. The thread also needs appraisal, privacy, clinical workflow, and governance.</p>
+              <div class="button-list" id="domainButtons"></div>
+            </div>
+            <div class="detail-box" id="domainDetail"></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad">
+          <h2>Year 1 to Year 4 Progression</h2>
+          <p class="section-lead">The progression moves from vocabulary and reasoning protection to supervised clinical critique and residency-ready accountability.</p>
+          <div class="year-progression">
+            <div class="year-card"><b>Year 1: Know</b><span>AI vocabulary, safe-use habits, privacy boundaries, population medicine, and foundational reasoning protection.</span></div>
+            <div class="year-card"><b>Year 2: Apply</b><span>Evidence appraisal, prediction, calibration, validation, organ-system cases, and Step-style reasoning protection.</span></div>
+            <div class="year-card"><b>Year 3: Practice</b><span>Supervised critique of AI summaries, differentials, patient education, preventive care, and clerkship workflow risks.</span></div>
+            <div class="year-card"><b>Year 4: Demonstrate</b><span>AI-ready intern judgment, specialty-specific AI critique, governance awareness, downtime, and accountability.</span></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad pilot-spotlight">
+          <h2>Model Early Pilot: POP / Biostatistics / Epidemiology</h2>
+          <p class="section-lead">Foundations of Population Medicine and Health Systems / POP I / POP II is the best first home because epidemiology and biostatistics already teach uncertainty, denominators, probability rules, risk, predictive value, bias, and evidence.</p>
+          <div class="spotlight-grid">
+            <div class="callout">
+              <h3>Teaching point for current AI models</h3>
+              <p>Even when ChatGPT gives the correct answer, the teaching moment remains valid. Students must recognize the reasoning cue before AI does. The goal is not to catch AI being wrong; the goal is to prevent students from outsourcing the setup.</p>
+              <p><b>Course director language:</b> "Before we use AI, we answer the reasoning question ourselves. What is the clue? What rule applies? AI can explain the steps, but it should not be the first thinker."</p>
+            </div>
+            <div>
+              <h3>Mini Checklist for Live AI Exercises</h3>
+              <div class="routine">
+                <div>Ask students to answer first.</div>
+                <div>Ask for the clue or reasoning rule.</div>
+                <div>Run AI second using a fictional or course-provided prompt.</div>
+                <div>Audit the AI explanation with students.</div>
+                <div>Name the AI concept explicitly.</div>
+                <div>Connect to future clinical reasoning.</div>
+              </div>
+            </div>
+          </div>
+          <div class="three-grid">
+            <div class="box"><h4>Examples</h4><p>Probability rules, relative risk, confidence intervals, sensitivity/specificity, PPV, and NPV.</p></div>
+            <div class="box"><h4>AI concepts</h4><p>Prompt engineering, hallucination, human-in-the-loop, false proficiency, RAG limits, data privacy, and guardrails.</p></div>
+            <div class="box"><h4>Evidence of learning</h4><p>Students explain the reasoning cue and audit whether the AI answer preserved the reasoning, not just whether the final answer was right.</p></div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad">
+          <h2>Interactive Curriculum Schematic Overlay</h2>
+          <p class="section-lead">This is a planning overlay based on the LSU SOM 2025-26 schematic. Select a domain to highlight where it belongs; select a course block for suggested activities and concepts.</p>
+          <div class="timeline-shell">
+            <aside class="side-tools">
+              <div class="tool-card">
+                <h3>AI Categories</h3>
+                <p class="section-lead">Select a category to highlight its placement.</p>
+                <div class="button-list" id="timelineCategoryButtons"></div>
+                <div class="small-actions">
+                  <button class="small-btn" type="button" id="timelineAll">Show all</button>
+                  <button class="small-btn" type="button" id="timelinePilot">Pilot view</button>
+                  <button class="small-btn" type="button" id="timelineClear">Clear</button>
+                </div>
+              </div>
+              <div class="tool-card" id="timelineDetail">
+                <h3>Course-Level Integration</h3>
+                <p class="section-lead">Select a course block to see its suggested AI activities.</p>
+              </div>
+            </aside>
+            <div class="timeline-scroll">
+              <div class="month-row">
+                <span>JUL</span><span>AUG</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span>
+              </div>
+              <div id="timeline"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel panel-pad matrix">
+          <h2>Concept Placement Matrix</h2>
+          <table>
+            <thead>
+              <tr><th>Curriculum Stage</th><th>Main AI Focus</th><th>Concepts to Introduce or Reinforce</th><th>Evidence of Learning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><b>Year 1: Know</b></td><td>AI vocabulary and reasoning protection</td><td>Prompt Engineering, System Prompt, Hallucination, Bias, Data Privacy, Guardrails, Human-in-the-Loop, Governance, Tokenization, Embeddings, RAG, Never-skilling, False proficiency</td><td>AI literacy quiz; prompt rewrite; AI-output audit; short reflection</td></tr>
+              <tr><td><b>Year 2: Apply</b></td><td>AI in disease, diagnosis, evidence, prediction, and organ systems</td><td>Multimodal AI, Latent Space, Attention, Temperature, Fine-Tuning, RLHF, Prompt Injection, Validation, Calibration, External validity, Automation bias, Predictive value</td><td>Case-based critique; Step-style AI safety item; patient explanation audit</td></tr>
+              <tr><td><b>Year 3: Practice</b></td><td>Supervised AI use in clinical workflow</td><td>Human-in-the-Loop, Governance, Data Privacy, Bias, Guardrails, RAG, Agents, Orchestration, Accountability, Disclosure</td><td>Clerkship AI audit card; mini-CEX style discussion; privacy/professionalism check</td></tr>
+              <tr><td><b>Year 4: Demonstrate</b></td><td>Residency-ready AI judgment and governance</td><td>AI downtime, Model drift, Specialty AI, FDA-cleared vs general-purpose AI, Accountability, Local validation, Clinical liability, Governance</td><td>Capstone simulation; AI-ready intern case; governance case presentation</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <section id="director" class="tab-panel" role="tabpanel">
+        <section class="panel panel-pad pilot-spotlight">
+          <h2>POP / Biostatistics / Epidemiology Pilot Detail</h2>
+          <p class="section-lead">Use this pilot as the model for other courses: student first, AI second, audit third. The live exercise is short, controlled, and tied to the existing lecture question.</p>
+          <div class="spotlight-grid">
+            <div class="callout">
+              <h3>Why this is the best first home</h3>
+              <p>These lectures already teach denominators, probability, uncertainty, association, bias, confidence intervals, screening tests, and predictive value. AI integration therefore reinforces the medical content instead of adding unrelated technology content.</p>
+            </div>
+            <div class="callout">
+              <h3>What the course director says</h3>
+              <p>"We are not asking AI for the answer first. We are asking students to identify the clue, rule, formula, or assumption first. Then we use AI to make the reasoning visible and audit whether the explanation was educationally complete."</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="director-layout">
+          <aside class="panel filters">
+            <h2>Course Director Filters</h2>
+            <p class="section-lead">Interactive tab: search, filter, expand, and print the course map.</p>
+            <label>Search
+              <input id="courseSearch" type="search" placeholder="Search course, concept, activity..." />
+            </label>
+            <label>Year
+              <select id="yearFilter"></select>
+            </label>
+            <label>Domain
+              <select id="domainFilter"></select>
+            </label>
+            <label>Status
+              <select id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="required">Required pilot / required candidate / capstone</option>
+                <option value="recommended">Recommended</option>
+                <option value="optional">Optional reinforcement / expansion</option>
+              </select>
+            </label>
+            <div class="filter-actions">
+              <button type="button" id="expandAll">Expand all</button>
+              <button type="button" id="collapseAll">Collapse all</button>
+            </div>
+            <button class="print-btn" type="button" id="printPage">Print / Save PDF</button>
+            <div class="box privacy" style="margin-top:12px">
+              <h4>Privacy Reminder</h4>
+              <p>Use only fictional, public, or course-provided data unless LSUHSC has explicitly approved another workflow. Do not paste PHI, learner identifiers, clinical notes, emails, or screenshots into public AI tools.</p>
+            </div>
+          </aside>
+
+          <section>
+            <div class="panel panel-pad" style="margin-bottom:14px">
+              <h2 id="courseMapTitle">All Courses</h2>
+              <p class="section-lead" id="courseMapLead">Open a course dropdown to see implementation guidance, selected EPA relevance, and a course director checklist.</p>
+            </div>
+            <div class="course-list" id="courseList"></div>
+          </section>
+        </section>
+      </section>
+
+      <section class="panel panel-pad">
+        <h2>Evidence and Alignment</h2>
+        <p class="section-lead">This section consolidates repeated source language from the original files. The proposal is aligned with emerging AAMC AI competency work and selected AAMC Core EPA relevance; it should not be represented as an approved LSU SOM curriculum change.</p>
+        <div class="evidence-grid">
+          <div class="box">
+            <h4>External anchors</h4>
+            <div class="source-list">
+              <a href="https://medai-lexicon.vercel.app/teaching-guide" target="_blank" rel="noreferrer">MedAI Teaching Guide</a>
+              <a href="https://www.aamc.org/about-us/medical-education/ai-competencies" target="_blank" rel="noreferrer">AAMC AI Competencies Across the Learning Continuum (in development)</a>
+              <a href="https://www.aamc.org/about-us/mission-areas/medical-education/principles-ai-use" target="_blank" rel="noreferrer">AAMC Responsible Use of AI in and for Medical Education</a>
+              <a href="https://www.aamc.org/about-us/mission-areas/medical-education/cbme/core-epas" target="_blank" rel="noreferrer">AAMC Core EPAs for Entering Residency</a>
+              <a href="https://www.medschool.lsuhsc.edu/medical_education/undergraduate/LSUSOM%20Curriculum%20Schematic%2025.26.pdf" target="_blank" rel="noreferrer">LSU SOM Curriculum Schematic 2025-26</a>
+            </div>
+          </div>
+          <div class="box">
+            <h4>Local scholarly base and governance language</h4>
+            <p>Local reference articles and notes in the uploaded AI-in-medical-education, competencies, ethics, and governance folder should be cited in any formal committee packet.</p>
+            <p>Local MedAI lexicon concepts from the hosted teaching guide and repository are used as the vocabulary base. Public AI tools should be used only within LSUHSC policy and never with PHI unless explicitly approved.</p>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    Phase 1 pilot planning map, not an approved curriculum change. Planning overlay for internal UME review; not a replacement for the official LSU SOM curriculum schematic.
+  </footer>
+
+  <script>
+const categories = [
+      {
+        id: "ai-literacy",
+        title: "AI Literacy",
+        color: "var(--ai-literacy)",
+        desc: "Shared vocabulary and conceptual fluency.",
+        concepts: {
+          "Foundations": ["LLM and generative AI", "Tokenization", "Embeddings", "Attention Mechanism", "Latent Space", "Scaling Laws"],
+          "User-facing concepts": ["Prompt Engineering", "System Prompt", "Few-Shot Prompting", "Temperature", "Style Transfer"],
+          "Medical use concepts": ["RAG", "Multimodal AI", "Hallucination", "Bias", "Data Privacy"]
+        }
+      },
+      {
+        id: "reasoning",
+        title: "Reasoning Protection",
+        color: "var(--reasoning)",
+        desc: "Prevent never-skilling and false proficiency.",
+        concepts: {
+          "Core risks": ["Never-skilling", "Deskilling", "Mis-skilling", "False proficiency", "Cognitive offloading"],
+          "Protective practices": ["Student-first reasoning", "Reasoning-preserving prompts", "Metacognitive calibration", "Human-in-the-Loop"],
+          "MedAI links": ["Prompt Engineering", "Guardrails", "Chain-of-Thought as visible reasoning scaffold"]
+        }
+      },
+      {
+        id: "appraisal",
+        title: "Critical Appraisal",
+        color: "var(--appraisal)",
+        desc: "Evaluate AI like clinical evidence.",
+        concepts: {
+          "Evidence questions": ["Population", "Data source", "Comparator", "Uncertainty", "Clinical magnitude"],
+          "AI performance": ["Validation", "Calibration", "External validity", "Model drift", "Predictive value"],
+          "MedAI links": ["Hallucination", "Bias", "RAG", "RLHF", "Emergent Abilities"]
+        }
+      },
+      {
+        id: "ethics",
+        title: "Ethics, Privacy, Equity",
+        color: "var(--ethics)",
+        desc: "Protect patients, trust, and fairness.",
+        concepts: {
+          "Privacy and safety": ["PHI", "Data Privacy", "Prompt Injection", "Disclosure", "Approved tools"],
+          "Equity": ["Bias", "Subgroup performance", "Local validation", "Language access", "Health equity impact"],
+          "Professionalism": ["Transparency", "Accountability", "Patient trust", "Appropriate and prohibited use"]
+        }
+      },
+      {
+        id: "workflow",
+        title: "Clinical Workflow",
+        color: "var(--workflow)",
+        desc: "Use AI in clinical tasks without surrendering judgment.",
+        concepts: {
+          "Clinical tasks": ["Documentation", "Handoff", "Discharge instructions", "Patient education", "Differential diagnosis audit"],
+          "Systems concepts": ["Agents", "Orchestration", "RAG", "Guardrails", "AI downtime"],
+          "Clinical safety": ["Automation bias", "Human oversight", "Verification before action"]
+        }
+      },
+      {
+        id: "governance",
+        title: "Governance and Lifelong Learning",
+        color: "var(--governance)",
+        desc: "Institutional oversight and durable judgment.",
+        concepts: {
+          "Governance": ["Governance (AI)", "Accountability", "Policy", "Local validation", "Monitoring"],
+          "Advanced concepts": ["Fine-Tuning", "LoRA", "Quantization", "Diffusion Models", "Multimodal AI"],
+          "Readiness": ["FDA-cleared vs general-purpose AI", "Specialty-specific AI", "Annual review", "Continuous learning"]
+        }
+      }
+    ];
+
+const timelineYears = [
+      {
+        year: "Year 1",
+        focus: "Know",
+        description: "Build AI vocabulary and safe-use habits while protecting foundational reasoning.",
+        tracks: [
+          {
+            label: "Longitudinal",
+            courses: [
+              c("CSI", "Clinical Skills Integration", 1, 6, ["ai-literacy", "reasoning", "workflow", "ethics"], true, ["AI-generated patient summary audit", "Prompt rewrite for patient communication", "Privacy and accountability check"]),
+              c("CSI", "Clinical Skills Integration", 7, 6, ["ai-literacy", "reasoning", "workflow", "ethics"], true, ["Student summary first, AI summary second, audit third", "Patient language and hallucination check"]),
+              c("HELP", "Health Equity Leadership for Physicians", 1, 6, ["ethics", "appraisal", "governance"], true, ["AI bias and subgroup performance audit", "Local population health equity discussion"]),
+              c("HELP", "Health Equity Leadership for Physicians", 7, 6, ["ethics", "appraisal", "governance"], true, ["Equity implications of AI clinical tools"])
+            ]
+          },
+          {
+            label: "Foundations",
+            courses: [
+              c("GA", "Gross Anatomy Lecture and Lab", 1, 2, ["ai-literacy", "workflow"], false, ["Optional multimodal AI orientation"]),
+              c("BIOC", "Biochemistry", 1, 2, ["ai-literacy", "appraisal"], false, ["Source-grounded AI explanation audit"]),
+              c("HBD", "Human Behavior and Development", 2, 2, ["ethics", "workflow"], false, ["AI communication and bias example"]),
+              c("POP Intro", "Population Medicine and Health Systems", 3, 1, ["ai-literacy", "reasoning", "ethics"], true, ["AI literacy and safe-use microintro"]),
+              c("POP I", "Population Medicine I", 4, 2, ["reasoning", "appraisal", "ai-literacy"], true, ["Probability, risk, and CI reasoning before AI"]),
+              c("Phys", "Physiology", 5, 3, ["ai-literacy", "appraisal"], false, ["AI explanation audit"]),
+              c("CBA", "Cell Biology and Microanatomy", 7, 2, ["ai-literacy", "workflow"], false, ["Image or histology AI orientation"]),
+              c("Genetics", "Genetics", 9, 1, ["ai-literacy", "ethics", "appraisal"], false, ["AI in genomics and privacy"]),
+              c("Immunology", "Immunology", 10, 1, ["ai-literacy", "appraisal"], false, ["AI-generated mechanism explanation audit"]),
+              c("POP II", "Population Medicine II", 10, 2, ["reasoning", "appraisal", "ethics"], true, ["Sensitivity, specificity, PPV, NPV, bias"])
+            ]
+          },
+          {
+            label: "IPE/Precept",
+            courses: [
+              c("IPE", "Interprofessional Education", 2, 1, ["governance", "workflow", "ethics"], true, ["Team-based AI governance case"]),
+              c("IPE", "Interprofessional Education", 10, 1, ["governance", "workflow"], true, ["Interprofessional AI safety review"]),
+              c("Preceptorship", "Preceptorship", 11, 1, ["ethics", "workflow"], false, ["No-PHI and professional boundaries check"]),
+              c("Vacation", "Vacation", 12, 1, [], false, [])
+            ]
+          }
+        ]
+      },
+      {
+        year: "Year 2",
+        focus: "Apply",
+        description: "Apply AI concepts to organ systems, diagnostic reasoning, evidence appraisal, and predictive tools.",
+        tracks: [
+          {
+            label: "Longitudinal",
+            courses: [
+              c("CSI", "Clinical Skills Integration", 1, 6, ["reasoning", "workflow", "ethics"], true, ["AI differential diagnosis audit", "Clinical explanation audit"]),
+              c("CSI", "Clinical Skills Integration", 7, 6, ["reasoning", "workflow", "ethics"], true, ["Patient education and AI summary critique"]),
+              c("HELP", "Health Equity Leadership for Physicians", 1, 12, ["ethics", "appraisal", "governance"], true, ["Bias, local validation, subgroup performance"])
+            ]
+          },
+          {
+            label: "Systems",
+            courses: [
+              c("FDTN", "Foundations of Disease and Therapy", 1, 2, ["ai-literacy", "appraisal", "governance"], true, ["AI in disease mechanisms and evidence limits"]),
+              c("NP", "Neurological and Psychiatric Systems", 2, 3, ["workflow", "reasoning", "ethics"], true, ["AI differential diagnosis and red-flag audit"]),
+              c("REN", "Renal System", 5, 1, ["appraisal", "workflow"], false, ["AI lab interpretation audit"]),
+              c("CV", "Cardiovascular System", 6, 1, ["appraisal", "workflow"], true, ["Risk prediction and validation critique"]),
+              c("PULM", "Pulmonary System", 7, 1, ["appraisal", "workflow"], false, ["False positive vs false negative tradeoff"]),
+              c("ENDO", "Endocrine and Reproductive Systems", 8, 2, ["workflow", "ethics"], false, ["Patient education audit"]),
+              c("HEME", "Hematological Systems", 10, 1, ["appraisal", "ai-literacy"], false, ["Source-grounded anemia workup check"]),
+              c("GI", "Gastrointestinal System", 11, 1, ["appraisal", "reasoning"], true, ["Predictive value and screening exercise"]),
+              c("MSKD", "Musculoskeletal/Dermatology", 12, 1, ["workflow", "appraisal"], false, ["Multimodal AI image classification critique"])
+            ]
+          },
+          {
+            label: "Prep/IPE",
+            courses: [
+              c("USMLE Step 1 Prep", "USMLE Step 1 Preparation", 12, 1, ["reasoning", "appraisal"], true, ["AI answer versus reasoning-preserving prompt"]),
+              c("IPE", "Interprofessional Education", 4, 1, ["governance", "workflow"], false, ["AI tool review roles"]),
+              c("Vacation", "Vacation", 12, 1, [], false, [])
+            ]
+          }
+        ]
+      },
+      {
+        year: "Year 3",
+        focus: "Practice",
+        description: "Critique AI in clinical workflows while maintaining privacy, supervision, and accountability.",
+        tracks: [
+          {
+            label: "Clinical",
+            courses: [
+              c("Clerkship Prep", "Clerkship Preparation", 1, 1, ["ethics", "workflow", "governance"], true, ["Required AI safe-use policy session"]),
+              c("Internal Medicine", "Internal Medicine", 1, 3, ["workflow", "reasoning", "appraisal"], true, ["AI differential and summary audit"]),
+              c("Career Planning", "Career Planning", 4, 1, ["governance"], false, ["Professional identity and AI reflection"]),
+              c("Surgery", "Surgery", 5, 2, ["workflow", "appraisal", "ethics"], true, ["Perioperative risk summary audit"]),
+              c("Neurology", "Neurology", 7, 1, ["workflow", "reasoning"], false, ["Triage/localization AI audit"]),
+              c("Vacation", "Vacation", 8, 1, [], false, []),
+              c("Pediatrics", "Pediatrics", 9, 2, ["workflow", "ethics"], true, ["Patient education and safety audit"]),
+              c("Family Medicine", "Family Medicine", 10, 1, ["ethics", "appraisal", "workflow"], true, ["Preventive care plan and equity audit"]),
+              c("OB/GYN", "Obstetrics and Gynecology", 11, 1, ["workflow", "ethics", "appraisal"], false, ["Prenatal screening explanation audit"]),
+              c("Psychiatry", "Psychiatry", 12, 1, ["workflow", "ethics"], false, ["Crisis-language guardrail audit"])
+            ]
+          }
+        ]
+      },
+      {
+        year: "Year 4",
+        focus: "Demonstrate",
+        description: "Demonstrate safe AI use, AI audit skills, governance awareness, and residency readiness.",
+        tracks: [
+          {
+            label: "Residency Ready",
+            courses: [
+              c("Primary AI", "Primary Acting Internship", 1, 2, ["workflow", "governance", "ethics"], true, ["AI-generated handoff audit"]),
+              c("Independent", "Independent Study / Interviews", 3, 1, ["governance"], false, ["Optional AI scholarship or review"]),
+              c("Elective 1", "Elective 1", 4, 1, ["ai-literacy", "workflow"], false, ["Specialty AI exploration"]),
+              c("Critical Concepts", "Critical Concepts", 4, 1, ["workflow", "governance", "appraisal"], true, ["AI-ready intern capstone simulation"]),
+              c("Elective 2", "Elective 2", 6, 1, ["workflow", "governance"], false, ["Specialty AI critique"]),
+              c("Secondary AI", "Secondary Acting Internship", 8, 2, ["workflow", "governance", "appraisal"], true, ["Specialty-specific AI tool critique"]),
+              c("Elective 3", "Elective 3", 10, 1, ["ai-literacy", "workflow"], false, ["Advanced AI elective option"]),
+              c("Elective 4", "Elective 4", 11, 1, ["ai-literacy", "workflow"], false, ["Advanced AI elective option"]),
+              c("Special Topics", "Special Topics", 12, 1, ["governance", "workflow", "ethics"], true, ["Clinical AI governance case"])
+            ]
+          }
+        ]
+      }
+    ];
+
+const mapYears = [
+      {
+        id: "all",
+        label: "All",
+        desc: "All courses and curriculum threads"
+      },
+      {
+        id: "y1",
+        label: "Year 1",
+        desc: "Know: vocabulary, safe-use habits, and foundational reasoning protection"
+      },
+      {
+        id: "y2",
+        label: "Year 2",
+        desc: "Apply: disease, diagnosis, evidence, prediction, and organ systems"
+      },
+      {
+        id: "y3",
+        label: "Year 3",
+        desc: "Practice: supervised AI use and critique in clinical workflows"
+      },
+      {
+        id: "y4",
+        label: "Year 4",
+        desc: "Demonstrate: residency-ready AI judgment, governance, and accountability"
+      }
+    ];
+
+const courses = [
+      course("y1", "Foundations of Population Medicine and Health Systems / POP I / POP II", "Required pilot", ["AI Literacy", "Reasoning Protection", "Critical Appraisal", "Ethics/Privacy/Equity"], ["Prompt Engineering", "Hallucination", "Bias", "Data Privacy", "Guardrails", "Human-in-the-Loop", "Never-skilling", "False proficiency", "RAG"], "This is the best first home for AI because epidemiology and biostatistics already teach uncertainty, population, denominator, predictive value, bias, and evidence.", ["Use probability, RR, CI, sensitivity/specificity, PPV/NPV questions.", "Students identify the rule, denominator, formula, or assumption before AI.", "Faculty uses AI to expose the reasoning steps.", "Students audit whether AI preserved reasoning or just gave the answer.", "Faculty names the AI concept: prompt engineering, guardrails, hallucination, or human-in-the-loop."], "AI-output audit plus one prompt rewrite. Example: students explain why an AI answer is correct but educationally incomplete if it skipped the reasoning cue.", "Never-skilling: students may never learn epidemiologic setup if AI supplies the denominator, formula, or rule."),
+      course("y1", "Clinical Skills Integration (CSI)", "Required pilot", ["AI Literacy", "Reasoning Protection", "Clinical Workflow", "Ethics/Privacy/Equity"], ["Hallucination", "Data Privacy", "Human-in-the-Loop", "Prompt Engineering", "Accountability", "False proficiency"], "CSI is where students learn that AI can organize clinical information but cannot replace observation, history, exam, or clinical judgment.", ["Students write a patient summary from a fictional case.", "AI generates a summary from the same case.", "Students compare omissions, unsupported assumptions, and overconfident language.", "Faculty teaches hallucination, privacy, and accountability.", "Students revise the summary."], "Summary audit rubric. Students identify at least one omission, one unsupported inference, and one privacy/safety issue.", "Mis-skilling: students can internalize bad clinical summaries if they do not audit AI output."),
+      course("y1", "Health Equity Leadership for Physicians (HELP)", "Required pilot", ["Ethics/Privacy/Equity", "Critical Appraisal", "Governance"], ["Bias", "Subgroup performance", "Data Privacy", "Validation", "Governance", "Health equity"], "HELP is the natural home for teaching that AI bias is a patient-safety and health-equity issue, not only a technical problem.", ["Show an AI tool with high overall accuracy but lower subgroup performance.", "Students identify which groups may be harmed.", "Students ask what local Louisiana population data are needed.", "Faculty teaches bias, subgroup performance, and governance.", "Students decide whether the tool is ready for use."], "Small-group bias audit. Students name the missing subgroup data and propose one mitigation.", "Mis-skilling and inequity: students may learn to trust biased tools if only overall performance is shown."),
+      course("y1", "Interprofessional Education (IPE)", "Required pilot", ["Governance", "Clinical Workflow", "Ethics/Privacy/Equity"], ["Governance", "Orchestration", "Human-in-the-Loop", "Accountability", "Team-based oversight"], "AI governance is interprofessional. Physicians, nurses, pharmacists, IT, compliance, ethics, and administrators all have roles.", ["Students review a proposed AI sepsis alert or risk model.", "Each profession identifies what it must verify.", "The group builds a deployment checklist.", "Faculty teaches governance and human-in-the-loop oversight."], "Team role map or checklist.", "Deskilling prevention requires teams to preserve human accountability, not just deploy tools."),
+      course("y1", "Gross Anatomy Lecture and Lab (GA)", "Optional reinforcement", ["AI Literacy", "Clinical Workflow"], ["Multimodal AI", "Image analysis", "Human-in-the-Loop"], "Do not overload anatomy with AI. A brief optional example can show that image classification is not clinical interpretation.", ["Show an AI-labeled image example.", "Students identify what the label can and cannot tell them.", "Faculty names multimodal AI and human oversight."], "One-minute exit question.", "False proficiency: recognizing a label is not the same as understanding anatomy."),
+      course("y1", "Biochemistry (BIOC)", "Optional reinforcement", ["AI Literacy", "Critical Appraisal"], ["RAG", "Hallucination", "Source checking"], "Biochemistry can use AI as a source-grounded explanation tool but should keep the focus on mechanisms.", ["Students ask AI to explain a pathway.", "Students verify the explanation against course material.", "Faculty teaches hallucination and source-grounding."], "Correct-the-AI explanation.", "Mis-skilling: plausible mechanism explanations can be wrong."),
+      course("y1", "Human Behavior and Development (HBD)", "Optional reinforcement", ["Ethics/Privacy/Equity", "Clinical Workflow"], ["Bias", "Patient communication", "Hallucination", "Guardrails"], "AI communication examples can support behavioral health teaching when kept brief and supervised.", ["AI drafts patient-facing language for a behavioral scenario.", "Students identify tone, stigma, bias, or unsafe wording.", "Faculty teaches guardrails."], "Communication critique.", "Mis-skilling: students may copy biased or stigmatizing language."),
+      course("y1", "Physiology", "Optional reinforcement", ["AI Literacy", "Critical Appraisal"], ["Prompt Engineering", "Hallucination", "Calibration"], "Physiology can use AI for explanations, but students must verify mechanisms and limits.", ["Students answer a physiology mechanism question first.", "AI explains second.", "Students identify whether the explanation is complete and calibrated."], "Mechanism audit.", "False proficiency: students may understand the AI wording without being able to reason through the mechanism."),
+      course("y1", "Cell Biology and Microanatomy (CBA)", "Optional reinforcement", ["AI Literacy", "Clinical Workflow"], ["Multimodal AI", "Bias", "Human-in-the-Loop"], "Image-based AI can be introduced at a high level, especially around histology or microscopy.", ["Show an AI classification example.", "Students identify what training data and validation would matter.", "Faculty teaches multimodal AI."], "Image AI critique.", "Mis-skilling: image labels can be accepted without context."),
+      course("y1", "Genetics", "Optional reinforcement", ["AI Literacy", "Ethics/Privacy/Equity", "Critical Appraisal"], ["Data Privacy", "Bias", "Validation", "RAG"], "Genetics is a natural place for privacy, data sensitivity, and limits of AI interpretation.", ["AI summarizes a genetic risk explanation.", "Students audit privacy, uncertainty, and patient communication.", "Faculty teaches data privacy and validation."], "Privacy and uncertainty check.", "Automation bias: genetic risk language can sound more deterministic than it is."),
+      course("y1", "Immunology", "Optional reinforcement", ["AI Literacy", "Critical Appraisal"], ["RAG", "Hallucination", "Prompt Engineering"], "Use AI only as an explanation-audit tool, not as new content.", ["Students compare AI explanation of an immune mechanism to course notes.", "They mark unsupported or incomplete claims."], "Mechanism explanation audit.", "Mis-skilling: incorrect mechanisms can be learned if AI is not checked."),
+      course("y1", "Preceptorship", "Optional reinforcement", ["Ethics/Privacy/Equity", "Clinical Workflow"], ["Data Privacy", "PHI", "Professionalism", "Disclosure"], "Students should learn clinical boundaries early.", ["Students classify examples of AI use as allowed, restricted, or prohibited.", "Faculty reinforces no PHI in unapproved tools."], "Privacy/professionalism check.", "Professional risk: unsafe AI use can violate privacy and trust."),
+
+      course("y2", "Foundations of Disease and Therapy (FDTN)", "Required pilot", ["AI Literacy", "Critical Appraisal", "Governance"], ["Validation", "Calibration", "Bias", "Human-in-the-Loop", "Governance", "RAG"], "This course can bridge basic disease mechanisms and AI-supported clinical decision-making.", ["AI suggests a disease mechanism or treatment implication.", "Students identify the evidence needed.", "Students ask what population and validation data would matter.", "Faculty teaches validation and calibration."], "Case-based AI critique.", "Mis-skilling: students can learn overconfident disease explanations from AI."),
+      course("y2", "Neurological and Psychiatric Systems (NP)", "Recommended", ["Reasoning Protection", "Clinical Workflow", "Ethics/Privacy/Equity"], ["Hallucination", "Automation bias", "Bias", "Guardrails", "Human-in-the-Loop"], "Neuropsychiatric reasoning is vulnerable to premature closure and bias, making it a strong site for AI critique.", ["AI generates a differential for altered mental status or depression.", "Students identify red flags and missing history/exam.", "Faculty teaches automation bias and guardrails."], "Differential diagnosis audit.", "Automation bias: students may over-trust a fluent differential."),
+      course("y2", "Renal System (REN)", "Optional reinforcement", ["Critical Appraisal", "Clinical Workflow"], ["Calibration", "Data quality", "Predictive value", "RAG"], "Renal lab trends are useful for teaching context and data quality.", ["AI interprets creatinine/electrolyte trend.", "Students identify missing context such as baseline kidney function and volume status."], "Lab interpretation audit.", "False proficiency: AI can state an interpretation without clinical context."),
+      course("y2", "Cardiovascular System (CV)", "Required pilot candidate", ["Critical Appraisal", "Clinical Workflow"], ["Risk prediction", "Validation", "Calibration", "Bias", "Automation bias"], "Cardiovascular risk tools are a natural bridge to AI prediction.", ["AI estimates risk.", "Students ask what data, population, calibration, and subgroup performance are needed.", "Faculty teaches validation and automation bias."], "Risk model critique.", "Automation bias: risk output can be accepted without checking calibration."),
+      course("y2", "Pulmonary System (PULM)", "Optional reinforcement", ["Critical Appraisal", "Clinical Workflow"], ["Sensitivity", "Specificity", "False positives", "False negatives", "Guardrails"], "Pulmonary triage examples are useful for threshold tradeoffs.", ["AI flags possible pulmonary embolism.", "Students discuss false positive vs false negative consequences."], "Safety tradeoff question.", "Mis-skilling: students may treat alerts as diagnoses."),
+      course("y2", "Endocrine and Reproductive Systems (ENDO)", "Optional reinforcement", ["Clinical Workflow", "Ethics/Privacy/Equity"], ["Patient education", "Data Privacy", "Bias", "Human-in-the-Loop"], "Chronic disease and reproductive health need careful patient communication.", ["AI drafts diabetes or prenatal education.", "Students revise for accuracy, literacy, cultural appropriateness, and safety."], "Patient handout audit.", "Mis-skilling: students may copy unsafe or poorly calibrated patient advice."),
+      course("y2", "Hematological Systems (HEME)", "Optional reinforcement", ["Critical Appraisal", "AI Literacy"], ["RAG", "Hallucination", "Source checking"], "Hematology can reinforce source-grounded AI use.", ["AI summarizes anemia workup.", "Students verify source and missing tests."], "Source-grounded audit.", "Mis-skilling: workups can become incomplete if AI omits key causes."),
+      course("y2", "Gastrointestinal System (GI)", "Required pilot candidate", ["Critical Appraisal", "Reasoning Protection"], ["Predictive value", "Pretest probability", "Calibration", "Human-in-the-Loop"], "GI screening is ideal for predictive value and prevalence.", ["Students predict how prevalence changes PPV.", "AI calculates second.", "Students audit whether AI explains pretest probability."], "Predictive value exercise.", "Never-skilling: students may never learn PPV if AI does the table."),
+      course("y2", "Musculoskeletal/Dermatology (MSKD)", "Optional reinforcement", ["Clinical Workflow", "Critical Appraisal"], ["Multimodal AI", "Bias", "Validation", "Human-in-the-Loop"], "Dermatology image AI is intuitive but should be framed as classification support, not diagnosis.", ["AI image classifier example.", "Students identify validation population and limits."], "Image AI critique.", "Automation bias: image output can feel definitive."),
+      course("y2", "USMLE Step 1 Preparation", "Required pilot candidate", ["Reasoning Protection", "Critical Appraisal"], ["Guardrails", "False proficiency", "Never-skilling", "Prompt Engineering"], "Step prep is a high-yield place to teach students how not to outsource reasoning.", ["Students answer a Step-style question first.", "AI answers second.", "Students compare a direct-answer prompt with a reasoning-preserving prompt."], "Step-style AI audit.", "False proficiency: students may get correct answers without building transferable reasoning."),
+
+      course("y3", "Clerkship Preparation", "Required pilot", ["Ethics/Privacy/Equity", "Clinical Workflow", "Governance"], ["Data Privacy", "PHI", "Disclosure", "Human-in-the-Loop", "Governance", "Accountability"], "This should be required before clinical rotations. It sets safe-use boundaries.", ["Students classify AI use cases as permitted, restricted, or prohibited.", "Faculty teaches PHI, supervision, disclosure, and accountability."], "Required policy quiz.", "Professional risk: unsafe AI use can compromise privacy and patient trust."),
+      course("y3", "Internal Medicine", "Recommended", ["Clinical Workflow", "Reasoning Protection", "Critical Appraisal"], ["Automation bias", "Hallucination", "Human-in-the-Loop", "RAG"], "Internal medicine is ideal for AI differential and summary audits.", ["AI generates a differential for dyspnea, chest pain, or AKI.", "Students identify missing data and unsafe assumptions."], "Clerkship AI audit card.", "Automation bias: AI may narrow or redirect clinical thinking."),
+      course("y3", "Surgery", "Recommended", ["Clinical Workflow", "Critical Appraisal", "Ethics/Privacy/Equity"], ["Calibration", "Accountability", "Human-in-the-Loop", "Data Privacy"], "Surgery can focus on perioperative risk and discharge instructions.", ["AI drafts perioperative risk or discharge summary.", "Students verify patient-specific risks and return precautions."], "Faculty discussion checklist.", "Deskilling: clinicians may stop independently checking risk details."),
+      course("y3", "Neurology", "Optional reinforcement", ["Clinical Workflow", "Reasoning Protection"], ["Automation bias", "Guardrails", "Human-in-the-Loop"], "Neurology can reinforce urgent action despite AI uncertainty.", ["AI suggests stroke mimic vs stroke.", "Students identify urgent action and localization limits."], "Case audit.", "Automation bias: incorrect reassurance can delay action."),
+      course("y3", "Pediatrics", "Recommended", ["Clinical Workflow", "Ethics/Privacy/Equity"], ["Patient education", "Bias", "Health literacy", "Data Privacy"], "Pediatrics is a strong home for AI patient education audit.", ["AI drafts asthma instructions.", "Students revise for reading level, accuracy, and safety."], "Patient education rubric.", "Mis-skilling: unsafe counseling language can be learned or copied."),
+      course("y3", "Family Medicine", "Recommended", ["Ethics/Privacy/Equity", "Critical Appraisal", "Clinical Workflow"], ["Bias", "Predictive value", "Governance", "Equity"], "Family Medicine connects AI to prevention, chronic disease, and population health.", ["AI suggests preventive care plan.", "Students check guideline source, patient context, access, and equity."], "Preventive care audit.", "Equity risk: AI may assume access or resources the patient does not have."),
+      course("y3", "Obstetrics and Gynecology", "Optional reinforcement", ["Clinical Workflow", "Ethics/Privacy/Equity", "Critical Appraisal"], ["Bias", "Privacy", "Calibration", "Patient communication"], "OB/GYN offers high-stakes communication and privacy examples.", ["AI explains a prenatal screening result.", "Students audit clarity, uncertainty, and privacy."], "Communication audit.", "Automation bias: risk language may be overinterpreted."),
+      course("y3", "Psychiatry", "Optional reinforcement", ["Clinical Workflow", "Ethics/Privacy/Equity"], ["Hallucination", "Guardrails", "Crisis safety", "Human oversight"], "Psychiatry AI activities should emphasize safety boundaries.", ["AI suggests language for a suicide risk discussion.", "Students identify unsafe or inappropriate phrasing."], "Safety audit.", "Mis-skilling: students may copy unsafe crisis language."),
+      course("y3", "Career Planning", "Optional reinforcement", ["Governance"], ["Professional identity", "Lifelong learning", "Disclosure"], "Career planning can include reflection on how AI changes specialties without replacing physician responsibility.", ["Students write a brief reflection on how AI may affect their intended field."], "Reflection.", "Professional identity: students should see AI as a tool, not a replacement for judgment."),
+
+      course("y4", "Primary Acting Internship", "Recommended", ["Clinical Workflow", "Governance", "Ethics/Privacy/Equity"], ["Accountability", "Human-in-the-Loop", "Data Privacy", "Hallucination"], "Acting internships are where students should demonstrate readiness to audit AI-supported clinical documents.", ["AI-generated handoff contains omissions.", "Student identifies missing high-risk details and revises."], "Acting internship checklist.", "Deskilling: handoff quality can degrade if AI summaries are accepted uncritically."),
+      course("y4", "Secondary Acting Internship", "Recommended", ["Clinical Workflow", "Governance", "Critical Appraisal"], ["Specialty-specific AI", "Validation", "Model drift", "Governance"], "Students can examine AI tools relevant to their specialty.", ["Student identifies one specialty AI tool or workflow and critiques validation, governance, and clinical risk."], "Brief presentation.", "Deskilling: specialty skills may erode if AI becomes a crutch."),
+      course("y4", "Critical Concepts", "Required capstone", ["Clinical Workflow", "Governance", "Critical Appraisal"], ["AI downtime", "Accountability", "Clinical risk", "Governance", "Automation bias"], "Critical Concepts should include an AI-ready intern session.", ["Simulation: AI alert, summary, or discharge instruction contains an embedded error.", "Student must detect, correct, and escalate appropriately."], "Capstone OSCE/simulation.", "Accountability: the physician remains responsible when AI is used."),
+      course("y4", "Special Topics", "Recommended", ["Governance", "Clinical Workflow", "Ethics/Privacy/Equity"], ["Governance", "Orchestration", "Agents", "Quality improvement", "Policy"], "Special Topics is ideal for governance and systems-level AI.", ["Small group designs a governance pathway for a clinical AI tool."], "Governance case presentation.", "Governance prevents both unsafe adoption and unhelpful prohibition."),
+      course("y4", "Electives", "Optional expansion", ["AI Literacy", "Clinical Workflow", "Governance"], ["RAG", "Agents", "Fine-Tuning", "Multimodal AI", "Bias mitigation"], "Electives can carry advanced content for interested students.", ["Advanced AI, informatics, quality improvement, or research project."], "Project or presentation.", "Advanced learning should be optional, not required for all students."),
+      course("y4", "Independent Study / Interviews", "Optional expansion", ["Governance", "Critical Appraisal"], ["Scholarship", "Evaluation", "Validation", "Curriculum research"], "Independent study can support AI curriculum scholarship.", ["Student contributes to AI curriculum evaluation or AI tool review."], "Scholarly product.", "Lifelong learning: students can help evaluate emerging AI practice.")
+    ];
+
+    const riskSpine = [
+      {
+        id: "never",
+        title: "Never-skilling",
+        stage: "Year 1 emphasis",
+        desc: "Students may never build foundational reasoning if AI performs the setup too early.",
+        actions: ["Ask students to identify the clue before AI.", "Use AI only after the class commits to a rule, denominator, or assumption.", "Assess the reasoning step, not just the final answer."]
+      },
+      {
+        id: "mis",
+        title: "Mis-skilling",
+        stage: "Years 1-2 emphasis",
+        desc: "Students may learn wrong patterns from plausible but incomplete or incorrect AI output.",
+        actions: ["Compare AI output to course material.", "Ask what is missing, unsupported, or overstated.", "Require source-grounded correction when appropriate."]
+      },
+      {
+        id: "false",
+        title: "False proficiency",
+        stage: "Years 1-2 emphasis",
+        desc: "Students may appear competent with AI support but fail when asked to reason independently.",
+        actions: ["Use student-first polling.", "Ask students to explain the reasoning cue.", "Use AI as the second explanation, not the first thinker."]
+      },
+      {
+        id: "automation",
+        title: "Automation bias",
+        stage: "Years 2-4 emphasis",
+        desc: "Students may over-trust automated recommendations in diagnostic, risk, or workflow settings.",
+        actions: ["Ask what data the model did not have.", "Check calibration, subgroup performance, and clinical context.", "Keep the physician accountable for action."]
+      },
+      {
+        id: "deskilling",
+        title: "Deskilling",
+        stage: "Years 3-4 and faculty emphasis",
+        desc: "Established clinical skills can erode when clinicians routinely accept AI support without independent verification.",
+        actions: ["Use AI downtime and handoff audit cases.", "Require students to revise and justify AI-supported work.", "Build governance and monitoring into clinical workflows."]
+      }
+    ];
+
+    const domainNarratives = {
+      "ai-literacy": "Students need shared vocabulary for LLMs, prompting, RAG, multimodal AI, hallucination, bias, and privacy. Literacy is a foundation, not the endpoint.",
+      "reasoning": "Reasoning protection is the core thread. Students must learn to preserve denominator selection, diagnostic setup, statistical rules, and clinical judgment before using AI.",
+      "appraisal": "Students should evaluate AI output like evidence: population, comparator, uncertainty, validation, calibration, external validity, and clinical magnitude.",
+      "ethics": "Students must protect privacy, avoid unsafe disclosure, understand bias and subgroup performance, and recognize that fairness is a patient-safety issue.",
+      "workflow": "Students should learn where AI appears in care: summaries, handoffs, patient education, alerts, differential diagnosis support, and discharge instructions.",
+      "governance": "Students should understand that AI requires local validation, monitoring, accountability, policy, and interprofessional oversight."
+    };
+
+    const epaCatalog = {
+      "EPA 1": "EPA 1: Gather a history and perform a physical examination.",
+      "EPA 2": "EPA 2: Prioritize a differential diagnosis following a clinical encounter.",
+      "EPA 3": "EPA 3: Recommend and interpret common diagnostic and screening tests.",
+      "EPA 4": "EPA 4: Enter and discuss orders and prescriptions.",
+      "EPA 5": "EPA 5: Document a clinical encounter in the patient record.",
+      "EPA 6": "EPA 6: Provide an oral presentation of a clinical encounter.",
+      "EPA 7": "EPA 7: Form clinical questions and retrieve evidence to advance patient care.",
+      "EPA 8": "EPA 8: Give or receive a patient handover to transition care responsibility.",
+      "EPA 9": "EPA 9: Collaborate as a member of an interprofessional team.",
+      "EPA 10": "EPA 10: Recognize a patient requiring urgent or emergent care and initiate management.",
+      "EPA 11": "EPA 11: Obtain informed consent for tests and procedures.",
+      "EPA 12": "EPA 12: Perform general procedures of a physician.",
+      "EPA 13": "EPA 13: Identify system failures and contribute to a culture of safety and improvement."
+    };
+
+    let activeTab = "executive";
+    let activeSpine = "never";
+    let activeDomain = "reasoning";
+    let activeTimelineCategory = null;
+    let timelinePilotOnly = false;
+
+    function c(name, full, start, span, cats, pilot, activities) {
+      return { name, full, start, span, cats, pilot, activities };
+    }
+
+    function course(year, name, status, categories, concepts, rationale, steps, assessment, thread) {
+      return { year, name, status, categories, concepts, rationale, steps, assessment, thread };
+    }
+
+    function byId(id) { return document.getElementById(id); }
+    function unique(list) { return [...new Set(list)]; }
+    function categoryById(id) { return categories.find(cat => cat.id === id); }
+
+    function normalize(text) {
+      return String(text || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+    }
+
+    function setTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        const isActive = btn.dataset.tab === tab;
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      });
+      document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.toggle("active", panel.id === tab));
+    }
+
+    function renderSpine() {
+      const buttons = byId("spineButtons");
+      buttons.innerHTML = "";
+      riskSpine.forEach(item => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn" + (activeSpine === item.id ? " active" : "");
+        btn.innerHTML = `<b>${item.title}</b><span>${item.stage}</span>`;
+        btn.addEventListener("click", () => {
+          activeSpine = item.id;
+          renderSpine();
+        });
+        buttons.appendChild(btn);
+      });
+
+      const item = riskSpine.find(x => x.id === activeSpine) || riskSpine[0];
+      byId("spineDetail").innerHTML = `
+        <h3>${item.title}</h3>
+        <p><b>${item.stage}.</b> ${item.desc}</p>
+        <ul>${item.actions.map(x => `<li>${x}</li>`).join("")}</ul>`;
+    }
+
+    function renderDomains() {
+      const buttons = byId("domainButtons");
+      buttons.innerHTML = "";
+      categories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn" + (activeDomain === cat.id ? " active" : "");
+        btn.style.borderLeft = `5px solid ${cat.color}`;
+        btn.innerHTML = `<b>${cat.title}</b><span>${cat.desc}</span>`;
+        btn.addEventListener("click", () => {
+          activeDomain = cat.id;
+          renderDomains();
+        });
+        buttons.appendChild(btn);
+      });
+      const cat = categoryById(activeDomain) || categories[0];
+      const groups = Object.entries(cat.concepts).map(([name, values]) => `
+        <div class="box" style="margin-top:10px">
+          <h4>${name}</h4>
+          <div class="chips">${values.map(v => `<span class="concept">${v}</span>`).join("")}</div>
+        </div>`).join("");
+      byId("domainDetail").innerHTML = `
+        <h3>${cat.title}</h3>
+        <p>${domainNarratives[cat.id] || cat.desc}</p>
+        ${groups}`;
+    }
+
+    function renderTimelineCategories() {
+      const holder = byId("timelineCategoryButtons");
+      holder.innerHTML = "";
+      categories.forEach(cat => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn" + (activeTimelineCategory === cat.id ? " active" : "");
+        btn.style.borderLeft = `5px solid ${cat.color}`;
+        btn.innerHTML = `<b>${cat.title}</b><span>${cat.desc}</span>`;
+        btn.addEventListener("click", () => {
+          activeTimelineCategory = activeTimelineCategory === cat.id ? null : cat.id;
+          renderTimeline();
+          renderTimelineCategories();
+        });
+        holder.appendChild(btn);
+      });
+    }
+
+    function renderTimeline() {
+      const holder = byId("timeline");
+      holder.innerHTML = "";
+      timelineYears.forEach(year => {
+        const section = document.createElement("section");
+        section.className = "timeline-year";
+        section.innerHTML = `<div class="year-title"><b>${year.year}</b><span><b>${year.focus}:</b> ${year.description}</span></div>`;
+
+        year.tracks.forEach(track => {
+          const row = document.createElement("div");
+          row.className = "track";
+          const label = document.createElement("div");
+          label.className = "track-label";
+          label.textContent = track.label;
+          const grid = document.createElement("div");
+          grid.className = "course-grid";
+
+          track.courses.forEach(item => {
+            if (timelinePilotOnly && !item.pilot) return;
+            const hit = activeTimelineCategory && item.cats.includes(activeTimelineCategory);
+            const block = document.createElement("button");
+            block.type = "button";
+            block.className = "timeline-course" + (hit ? " active-hit" : "");
+            block.style.gridColumn = `${item.start} / span ${item.span}`;
+            if (hit) block.style.color = categoryById(activeTimelineCategory).color;
+            const tags = item.cats.map(id => `<span class="mini-tag" style="background:${categoryById(id).color}"></span>`).join("");
+            block.innerHTML = `<b>${item.name}</b><span>${item.full}</span><div class="mini-tags">${tags}</div>`;
+            block.addEventListener("click", () => renderTimelineDetail(item, year));
+            grid.appendChild(block);
+          });
+
+          row.appendChild(label);
+          row.appendChild(grid);
+          section.appendChild(row);
+        });
+
+        holder.appendChild(section);
+      });
+    }
+
+    function renderTimelineDetail(item, year) {
+      const categoriesText = item.cats.length ? item.cats.map(id => categoryById(id).title).join(", ") : "No planned AI activity";
+      const activities = item.activities.length
+        ? item.activities.map(x => `<div>${x}</div>`).join("")
+        : `<div>No required AI activity proposed for this block.</div>`;
+      byId("timelineDetail").innerHTML = `
+        <h3>${year.year}: ${item.full}</h3>
+        <p class="section-lead"><b>Categories:</b> ${categoriesText}</p>
+        <div class="steps">${activities}</div>
+        <p class="section-lead">Suggested method: student reasons first, AI use second, student audit third, faculty names the concept.</p>`;
+    }
+
+    function addEPAs(target, keys) {
+      keys.forEach(key => target.push(epaCatalog[key]));
+    }
+
+    function getEPAs(item) {
+      const text = normalize([item.name, item.year, item.status, ...item.categories, ...item.concepts, item.rationale, item.assessment, item.thread].join(" "));
+      const epas = [];
+      if (text.includes("population") || text.includes("biostat") || text.includes("evidence") || text.includes("critical appraisal") || text.includes("step")) addEPAs(epas, ["EPA 3", "EPA 7"]);
+      if (text.includes("reasoning") || text.includes("differential") || text.includes("organ") || ["y2", "y3", "y4"].includes(item.year)) addEPAs(epas, ["EPA 2"]);
+      if (text.includes("clinical skills") || text.includes("preceptorship") || text.includes("clerkship") || text.includes("internal medicine") || text.includes("pediatrics") || text.includes("family medicine") || text.includes("psychiatry") || text.includes("ob gyn")) addEPAs(epas, ["EPA 1", "EPA 5", "EPA 6"]);
+      if (text.includes("interprofessional") || text.includes("team") || text.includes("governance") || text.includes("help")) addEPAs(epas, ["EPA 9", "EPA 13"]);
+      if (text.includes("privacy") || text.includes("bias") || text.includes("equity") || text.includes("safety") || text.includes("validation") || text.includes("model drift")) addEPAs(epas, ["EPA 13"]);
+      if (text.includes("surgery") || text.includes("acting internship") || text.includes("critical concepts") || text.includes("handoff") || text.includes("urgent") || text.includes("emergent")) addEPAs(epas, ["EPA 4", "EPA 8", "EPA 10"]);
+      if (text.includes("surgery") || text.includes("ob gyn")) addEPAs(epas, ["EPA 11"]);
+      if (text.includes("anatomy") || text.includes("simulation")) addEPAs(epas, ["EPA 12"]);
+      const mapped = unique(epas);
+      return mapped.length ? mapped.slice(0, 6) : [epaCatalog["EPA 7"], epaCatalog["EPA 13"]];
+    }
+
+    function getAAMCPrinciples(item) {
+      const text = normalize([item.name, ...item.categories, ...item.concepts, item.rationale, item.assessment, item.thread].join(" "));
+      const principles = ["Maintain Human-Centered Focus", "Monitor and Evaluate"];
+      if (text.includes("ai literacy") || text.includes("prompt") || text.includes("lexicon")) principles.push("Foster Education, Training, and Continuing Professional Development");
+      if (text.includes("privacy") || text.includes("phi")) principles.push("Protect Data Privacy");
+      if (text.includes("ethics") || text.includes("transparent") || text.includes("disclosure") || text.includes("accountability")) principles.push("Ensure Ethical and Transparent Use");
+      if (text.includes("equity") || text.includes("bias") || text.includes("subgroup")) principles.push("Provide Equal Access to AI");
+      if (text.includes("governance") || text.includes("interprofessional") || text.includes("team")) principles.push("Develop Curricula Through Interdisciplinary Collaboration");
+      return unique(principles);
+    }
+
+    function getStatusClass(status) {
+      const text = normalize(status);
+      if (text.includes("optional")) return "optional";
+      if (text.includes("recommended")) return "recommended";
+      return "";
+    }
+
+    function getPrimaryRisk(item) {
+      const text = normalize([item.thread, ...item.concepts].join(" "));
+      if (text.includes("never skilling")) return "Never-skilling";
+      if (text.includes("mis skilling")) return "Mis-skilling";
+      if (text.includes("false proficiency")) return "False proficiency";
+      if (text.includes("automation bias")) return "Automation bias";
+      if (text.includes("deskilling")) return "Deskilling";
+      if (text.includes("professional risk") || text.includes("privacy")) return "Automation bias and accountability";
+      return "Reasoning protection";
+    }
+
+    function getProtectedSkill(item) {
+      const text = normalize([item.name, ...item.categories, ...item.concepts, item.rationale, ...item.steps].join(" "));
+      if (text.includes("population") || text.includes("probability") || text.includes("risk") || text.includes("confidence") || text.includes("predictive")) return "Epidemiologic and biostatistical reasoning: denominator, rule, uncertainty, predictive value, and evidence interpretation.";
+      if (text.includes("clinical skills") || text.includes("summary") || text.includes("documentation")) return "Clinical observation, patient summary, documentation, and accountable communication.";
+      if (text.includes("bias") || text.includes("equity") || text.includes("subgroup")) return "Health equity reasoning, subgroup performance critique, and patient-safety judgment.";
+      if (text.includes("governance") || text.includes("interprofessional")) return "Team-based governance, local validation, monitoring, and accountability.";
+      if (text.includes("differential") || text.includes("diagnosis") || text.includes("organ")) return "Clinical reasoning, differential diagnosis, and interpretation of missing context.";
+      if (text.includes("privacy") || text.includes("phi")) return "Professionalism, privacy discipline, and safe-use boundaries.";
+      return "Medical reasoning and professional judgment relevant to the existing course objective.";
+    }
+
+    function getChecklist(item) {
+      const pop = item.name.includes("Population Medicine");
+      const base = pop
+        ? ["Ask students to answer the medical/statistical question before AI appears.", "Ask students to name the clue, denominator, rule, formula, or assumption.", "Run AI second using a complete reasoning-preserving prompt.", "Audit whether AI showed the reasoning and avoided misleading shortcuts.", "Name the MedAI concept explicitly.", "Connect the exercise to future clinical reasoning and Step-style performance."]
+        : ["Identify the existing course objective this activity supports.", "Use a short student-first question before AI is introduced.", "Use only fictional, public, or course-provided information.", "Run AI second to expose, compare, or critique reasoning.", "Ask students to audit missing, unsafe, unsupported, or overstated output.", "Name the AI concept and capture one evidence-of-learning item."];
+      if (normalize([item.name, ...item.concepts].join(" ")).includes("privacy") || normalize(item.assessment).includes("privacy")) {
+        base.push("Reinforce that PHI and learner identifiers must not be pasted into public AI tools unless LSUHSC explicitly approves the workflow.");
+      }
+      return base;
+    }
+
+    function courseMatches(item, query, year, domain, status) {
+      if (year !== "all" && item.year !== year) return false;
+      if (domain !== "all" && !item.categories.some(cat => normalize(cat) === normalize(domain))) return false;
+      const statusText = normalize(item.status);
+      if (status === "required" && !(statusText.includes("required"))) return false;
+      if (status === "recommended" && !statusText.includes("recommended")) return false;
+      if (status === "optional" && !statusText.includes("optional")) return false;
+      if (!query) return true;
+      const text = [item.name, item.status, ...item.categories, ...item.concepts, item.rationale, ...item.steps, item.assessment, item.thread, getPrimaryRisk(item), getProtectedSkill(item), ...getEPAs(item), ...getAAMCPrinciples(item)].join(" ");
+      return normalize(text).includes(normalize(query));
+    }
+
+    function renderFilters() {
+      const yearFilter = byId("yearFilter");
+      yearFilter.innerHTML = mapYears.map(y => `<option value="${y.id}">${y.label}</option>`).join("");
+      const domainFilter = byId("domainFilter");
+      const domains = ["All domains", "AI Literacy", "Reasoning Protection", "Critical Appraisal", "Ethics/Privacy/Equity", "Clinical Workflow", "Governance"];
+      domainFilter.innerHTML = domains.map((d, i) => `<option value="${i === 0 ? "all" : d}">${d}</option>`).join("");
+    }
+
+    function renderCourseMap() {
+      const query = byId("courseSearch").value.trim();
+      const year = byId("yearFilter").value;
+      const domain = byId("domainFilter").value;
+      const status = byId("statusFilter").value;
+      const list = byId("courseList");
+      const selectedYear = mapYears.find(y => y.id === year);
+      byId("courseMapTitle").textContent = year === "all" ? "All Courses" : selectedYear.label;
+      byId("courseMapLead").textContent = year === "all" ? "Open a course dropdown to see the course director plan." : selectedYear.desc;
+
+      const filtered = courses.filter(item => courseMatches(item, query, year, domain, status));
+      list.innerHTML = "";
+      if (!filtered.length) {
+        list.innerHTML = `<div class="panel panel-pad"><h3>No courses match the current filters.</h3><p class="section-lead">Clear one filter or search for another concept.</p></div>`;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const details = document.createElement("details");
+        const isPop = item.name.includes("Population Medicine");
+        details.className = "course" + (isPop ? " pilot" : "");
+        if (isPop || (index === 0 && year !== "all")) details.open = true;
+        const statusClass = getStatusClass(item.status);
+        const epas = getEPAs(item);
+        const principles = getAAMCPrinciples(item);
+        const checklist = getChecklist(item);
+        const risk = getPrimaryRisk(item);
+        const skill = getProtectedSkill(item);
+        const privacyRelevant = normalize([item.name, ...item.concepts, item.assessment, item.thread].join(" ")).includes("privacy") || normalize([item.name, ...item.concepts].join(" ")).includes("phi");
+
+        details.innerHTML = `
+          <summary>
+            <div class="course-title">
+              <b>${item.name}</b>
+              <div class="course-meta">
+                <span class="badge ${statusClass}">${item.status}</span>
+                <span class="tag">${item.year.toUpperCase().replace("Y", "Year ")}</span>
+                <span class="tag">${risk}</span>
+              </div>
+            </div>
+            <div class="course-meta">${item.categories.map(x => `<span class="tag">${x}</span>`).join("")}</div>
+          </summary>
+          <div class="course-body">
+            <div class="box">
+              <h4>Why this course fits</h4>
+              <p>${item.rationale}</p>
+            </div>
+            <div class="box">
+              <h4>Medical skill protected or reinforced</h4>
+              <p>${skill}</p>
+            </div>
+            <div class="box wide">
+              <h4>AI concepts to teach</h4>
+              <div class="concept-chips">${item.concepts.map(x => `<span class="concept">${x}</span>`).join("")}</div>
+            </div>
+            <div class="box">
+              <h4>Suggested 3-5 minute teaching activity</h4>
+              <div class="steps">${item.steps.map(step => `<div>${step}</div>`).join("")}</div>
+            </div>
+            <div class="box">
+              <h4>Course director action checklist</h4>
+              <div class="checklist">${checklist.map(step => `<div>${step}</div>`).join("")}</div>
+            </div>
+            <div class="wide three-grid">
+              <div class="box"><h4>Student-first step</h4><p>Students commit to the reasoning, clue, rule, denominator, clinical judgment, or safety concern before AI is used.</p></div>
+              <div class="box"><h4>AI-use step</h4><p>Faculty uses AI second to expose reasoning, compare output, or generate a controlled artifact for critique.</p></div>
+              <div class="box"><h4>Audit / debrief step</h4><p>Students identify what was correct, incomplete, unsafe, unsupported, or educationally incomplete. Faculty names the AI concept.</p></div>
+            </div>
+            <div class="box">
+              <h4>Knowledge check or assessment</h4>
+              <p>${item.assessment}</p>
+            </div>
+            <div class="box">
+              <h4>Main risk addressed</h4>
+              <p><b>${risk}:</b> ${item.thread}</p>
+            </div>
+            <div class="box wide">
+              <h4>Selected AAMC Core EPA relevance and responsible AI principle connection</h4>
+              <div class="evidence-grid">
+                <div>
+                  <h4>Selected EPA relevance</h4>
+                  <div class="map-list">${epas.map(x => `<span>${x}</span>`).join("")}</div>
+                </div>
+                <div>
+                  <h4>Responsible AI principle relevance</h4>
+                  <div class="pill-list">${principles.map(x => `<span class="pill">${x}</span>`).join("")}</div>
+                </div>
+              </div>
+            </div>
+            ${privacyRelevant ? `<div class="box wide privacy"><h4>Privacy / PHI note</h4><p>Use only fictional, public, or course-provided data unless LSUHSC has explicitly approved another workflow. Do not paste PHI or learner identifiers into public AI tools.</p></div>` : ""}
+          </div>`;
+        list.appendChild(details);
+      });
+    }
+
+    function expandAll(open) {
+      document.querySelectorAll("#courseList details.course").forEach(d => d.open = open);
+    }
+
+    function init() {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => setTab(btn.dataset.tab)));
+      renderSpine();
+      renderDomains();
+      renderTimelineCategories();
+      renderTimeline();
+      renderTimelineDetail(timelineYears[0].tracks[1].courses[3], timelineYears[0]);
+      renderFilters();
+      renderCourseMap();
+
+      byId("timelineAll").addEventListener("click", () => {
+        timelinePilotOnly = false;
+        activeTimelineCategory = null;
+        byId("timelinePilot").textContent = "Pilot view";
+        renderTimelineCategories();
+        renderTimeline();
+      });
+      byId("timelinePilot").addEventListener("click", () => {
+        timelinePilotOnly = !timelinePilotOnly;
+        byId("timelinePilot").textContent = timelinePilotOnly ? "Full view" : "Pilot view";
+        renderTimeline();
+      });
+      byId("timelineClear").addEventListener("click", () => {
+        activeTimelineCategory = null;
+        timelinePilotOnly = false;
+        byId("timelinePilot").textContent = "Pilot view";
+        renderTimelineCategories();
+        renderTimeline();
+      });
+
+      ["courseSearch", "yearFilter", "domainFilter", "statusFilter"].forEach(id => byId(id).addEventListener("input", renderCourseMap));
+      byId("expandAll").addEventListener("click", () => expandAll(true));
+      byId("collapseAll").addEventListener("click", () => expandAll(false));
+      byId("printPage").addEventListener("click", () => window.print());
+    }
+
+    init();
+  </script>
+</body>
+</html>
